@@ -96,7 +96,7 @@ class JavaLanguageServer extends LanguageServer {
         // If classpath is specified by the user, don't infer anything
         if (!classPath.isEmpty()) {
             javaEndProgress();
-            return new JavaCompilerService(classPath, docPath(), addExports);
+            return new JavaCompilerService(home(), setSystemPath(), classPath, docPath(), addExports);
         }
         // Otherwise, combine inference with user-specified external dependencies
         else {
@@ -109,7 +109,7 @@ class JavaLanguageServer extends LanguageServer {
             var docPath = infer.buildDocPath();
 
             javaEndProgress();
-            return new JavaCompilerService(classPath, docPath, addExports);
+            return new JavaCompilerService(home(), setSystemPath(), classPath, docPath, addExports);
         }
     }
 
@@ -150,6 +150,24 @@ class JavaLanguageServer extends LanguageServer {
             strings.add(each.getAsString());
         }
         return strings;
+    }
+
+    private Path home() {
+        if (!settings.has("home")) return null;
+        var home = settings.get("home");
+        if (home == null) return null;
+        var homeStr = home.getAsString().trim();
+        if (homeStr.isEmpty()) {
+            return null;
+        }
+        return Paths.get(homeStr);
+    }
+
+    private boolean setSystemPath() {
+        if (!settings.has("setSystemPath")) return false;
+        var value = settings.get("setSystemPath");
+        if (value == null) return false;
+        return value.getAsBoolean();
     }
 
     @Override
