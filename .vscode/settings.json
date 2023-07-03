@@ -29,6 +29,7 @@
         "jdk.compiler/com.sun.tools.javac.model",
         "jdk.compiler/com.sun.tools.javac.util",
     ],
+    "java.setSystemPath": false
     // "typescript.tsserver.trace": "verbose",
     // "java.trace.server": "verbose",
 }

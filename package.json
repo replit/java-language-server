@@ -119,6 +119,10 @@
                     ],
                     "default": "off",
                     "description": "Traces the communication between VSCode and the language server."
+                },
+                "java.setSystemPath": {
+                    "type": "boolean",
+                    "description": "Option to pass the Java home directory to the --system flag for the javac command for inferences"
                 }
             }
         },
