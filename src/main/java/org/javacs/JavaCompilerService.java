@@ -10,6 +10,8 @@ import javax.tools.*;
 
 class JavaCompilerService implements CompilerProvider {
     // Not modifiable! If you want to edit these, you need to create a new instance
+    final Path javaHome;
+    final boolean setSystemPath;
     final Set<Path> classPath, docPath;
     final Set<String> addExports;
     final ReusableCompiler compiler = new ReusableCompiler();
@@ -21,7 +23,9 @@ class JavaCompilerService implements CompilerProvider {
     // TODO intercept files that aren't in the batch and erase method bodies so compilation is faster
     final SourceFileManager fileManager;
 
-    JavaCompilerService(Set<Path> classPath, Set<Path> docPath, Set<String> addExports) {
+    JavaCompilerService(Path javaHome, boolean setSystemPath, Set<Path> classPath, Set<Path> docPath, Set<String> addExports) {
+        this.javaHome = javaHome;
+        this.setSystemPath = setSystemPath;
         System.err.println("Class path:");
         for (var p : classPath) {
             System.err.println("  " + p);
